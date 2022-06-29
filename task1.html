@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    let str = prompt('Введите произвольный список чисел через запятую:','1,0,0123,1,0,0');
+    let arr = str.split(',');
+    let result = [];
+    for(let i = 0; i<arr.length; i++){
+      if(arr[i] == 0){
+        result.push(i+1);
+      }
+    }
+    if(result.length == 0){
+      alert('Нулевых элементов не обнаружено');
+    }else{
+      alert(`Для массива:\n [ ${arr} ] \n Нулевые элементы расположены на следующих позициях массива:\n [ ${result} ]`);
+    }
+  </script>
+</head>
+<body>
+  <p>
+    В целочисленной последовательности есть нулевые элементы. Создать массив из номеров этих элементов.
+  </p>
+</body>
+</html>

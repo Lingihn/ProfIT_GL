@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    let str = prompt('Введите произвольный список чисел через запятую:','6,5,4,3,2,1,0');
+    let arr = str.split(','); 
+    let newArr = [];
+    let sum = 1;
+    //Самая простая сортировка, пузырьковая
+    for (let i = 0, endI = arr.length - 1; i < endI; i++) {
+        for (let j = 0, endJ = endI - i; j < endJ; j++) {
+            if (arr[j] > arr[j + 1]) {
+                let swap = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = swap;
+            }
+        }
+    }
+    //Убираю макс. и мин. значения массива.
+    newArr = arr.slice(1,-1);
+    //Произведение элементов массива
+    for(let elem of newArr){
+      sum *= elem;
+    }
+    alert(`Количество элементов в новом массиве: ${newArr.length} \n Произведение всех элементов между мин. и макс. значений: ${sum} `);
+  </script>
+</head>
+<body>
+  <p>
+    В числовой последовательности определить количество и произведение элементов расположенных между максимальным и минимальным. 
+    Максимальный и минимальный элементы в расчёт количества и произведения не включать.
+  </p>
+</body>
+</html>
