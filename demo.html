@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    //Сортировка. Состоит из 4 функций.
+
+    function swapElem(arr, firstInd, secInd){ // Замена элементов местами.
+      let a = arr[firstInd];
+      arr[firstInd] = arr[secInd];
+      arr[secInd] = a;
+    };
+    function reverseSort(arr, left, right){
+      /*
+      1. Ищем опорный элемент.
+      2. Ищем первое значение больше опорного слева.
+      3. Ищем первое значение меньше опорного справа.
+      4. Проверим, не заходит ли левый индекс за правый.
+      5. Если не заходит - меняем элементы местами.
+      6. Если заходит - выходим из цикла.
+      7. Возвращаем левый индекс.
+      8. Для левого подмассива он будет правым индексом.
+      9. Для правого подмассива он будет левым индексом.
+      */
+      let pivot = Math.floor((left + right) / 2);
+      while(left <= right){
+        while(arr[left] > arr[pivot]){
+          left++;
+        };
+        while(arr[right] < arr[pivot]){
+          right--;
+        };
+        if(left <= right ){
+          swapElem(arr, left, right);
+          left++;
+          right--;
+        };
+      };
+    return left;
+    };
+
+    // Рекурсивная функция быстрой сортировки.
+    function qSort(arr, left = 0, right = arr.length - 1){ 
+      let index;
+      if(arr.length > 1){
+        index = reverseSort(arr, left, right);
+        if(left < index - 1){
+          qSort(arr, left, index - 1);
+        }
+        if(index < right){
+          qSort(arr, index, right);
+        }
+      }
+      return arr;
+    }
+
+    //Сортировка всех элементов матрицы
+    function sortMatrix(matrix, columns){
+      let mat = matrix.flat(1);
+      let sortmat = qSort(mat);
+      let sliceMat =[];
+      for (let i = 0; i < Math.ceil(sortmat.length / columns); i++){
+        sliceMat[i] = sortmat.slice((i * columns), (i * columns) + columns);
+      }
+      return sliceMat;
+    }
+    //Окончание сортировки
+
+    //Создание матрицы, генерация элементов
+    function genMatrix(lines, colums, min, max){
+      let arr = [];
+      for(let i = 0; i < lines; i++){
+        arr[i] = [];
+        for(let k=0; k < colums; k++){
+          arr[i][k] = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+      }
+      return arr;
+    };
+
+    //Вывод массива в виде таблицы
+    function viewMatrix(matrix){
+      document.write('<table>');
+      let a = 0, b = 0;
+      while(a < matrix.length){
+        document.write('<tr>')
+        b=0;
+        while(b < matrix[a].length){
+          document.write(`<td align="center"> ${matrix[a][b]} </td>`);
+          b++;
+        }
+        document.write('</tr>')
+        a++;
+      }
+      document.write('</table>');
+      document.write('<hr>')
+    }
+    
+    //Создание результируещего массива 
+    function getMatrixResult(mat,mat2){
+      let matrixResult = [];
+      let mat2Result;
+      for(let a = 0; a < mat.length; a++){
+        matrixResult[a] = new Array();
+        for(let b=0; b < c; b++){
+          //if((typeof mat2[b] !== 'undefined')){
+            matrixResult[a][b] = mat[a][b];
+            mat2Result = 1;
+            for(let k=0; k < c; k++){
+              mat2Result *= mat2[a][k];
+            }
+            matrixResult[a][b] += mat2Result;;
+          //}
+        }
+      }
+      return matrixResult;
+    }
+
+    let l = +prompt('Введите произвольное количество строк', 3);
+    let c = +prompt('Какое произвольное количество столбцов', 5);
+    let min = +prompt('Минимальное число для генерации элементов',1);
+    let max = +prompt('Максимальное число для генерации элементов',5);
+    
+    let s = genMatrix(l, c, min, max);
+    let t = genMatrix(l, c, min, max);
+    let ss = sortMatrix(s, c);
+
+    viewMatrix(s);
+    viewMatrix(ss);
+    viewMatrix(t);
+    
+    viewMatrix(getMatrixResult(ss,t));
+  </script>
+</head>
+<body>
+  <h3>Задание</h3>
+  <p>"Даны две числовые  матрицы S(M, N) и T(M, L).</p>
+  <p>Получить матрицу SS из матрицы S, расположив все элементы матрицы S в порядке убывания (построчно слева направо).
+   Получить результирующую матрицу R суммированием элементов каждой строки матрицы SS с 
+   произведением всех элементов соответствующей строки матрицы Т.</p>
+   <p>Напечатать матрицы SS и R."</p>
+  
+   <h3>Вывод</h3>
+   <p>Первая матрица - S(M,N)</p>
+   <p>Вторая матрица - SS(отсортированные элементы)</p>
+   <p>Третья матрица - T(M,L)</p>
+   <p>Четвертая матрица - R (результат вычислений) </p> 
+</body>
+</html>
